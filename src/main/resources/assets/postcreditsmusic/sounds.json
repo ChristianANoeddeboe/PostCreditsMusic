@@ -1,0 +1,11 @@
+{
+  "track": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "postcreditsmusic:music/track",
+        "stream": true
+      }
+    ]
+  }
+}
