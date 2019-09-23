@@ -1,9 +1,8 @@
 package angercraft.postcreditsmusic;
 
-import angercraft.postcreditsmusic.client.ClientHandler;
+import angercraft.postcreditsmusic.network.ModNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,7 +31,7 @@ public class RespawnEventHandler {
                 e.printStackTrace();
             }
             if(seenCredits) {
-                ClientHandler.playTrack();
+                ModNetworkHandler.channel.send();
             }
         }
         /*if(ClientHandler.played == false) {
