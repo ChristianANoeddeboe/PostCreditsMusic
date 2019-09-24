@@ -2,6 +2,6 @@
     "pack": {
         "description": "Post Credits Music Resources",
         "pack_format": 4,
-        "_comment": "A pack_format of 4 requires json lang files. Note: we require v4 pack meta for all mods."
+        "_comment": "The track supplied is called 'Better Days' and is composed by Benjamin Tissot aka. Bensound. The song is available on 'www.bensound.com'."
     }
 }

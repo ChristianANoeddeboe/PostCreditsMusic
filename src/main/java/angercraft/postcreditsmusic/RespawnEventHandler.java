@@ -9,14 +9,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.lang.reflect.Field;
 
 @Mod.EventBusSubscriber(modid = PostCreditsMusic.MOD_ID)
 public class RespawnEventHandler {
 
-    private static Field seenCreditsField = null;
+    private final static Field seenCreditsField = ObfuscationReflectionHelper.findField(ServerPlayerEntity.class, "field_192040_cp");
 
     @SubscribeEvent
     public static void play(PlayerEvent.PlayerRespawnEvent event) {
@@ -25,9 +24,6 @@ public class RespawnEventHandler {
         if(playerEntity instanceof ServerPlayerEntity && event.isEndConquered()) {
             ServerPlayerEntity player = (ServerPlayerEntity) playerEntity;
             boolean seenCredits = false;
-            if(seenCreditsField == null) {
-                seenCreditsField = ObfuscationReflectionHelper.findField(ServerPlayerEntity.class, "field_192040_cp");
-            }
             try {
                 seenCredits = seenCreditsField.getBoolean(player);
             } catch (IllegalAccessException e) {

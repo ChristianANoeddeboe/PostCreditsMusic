@@ -17,17 +17,8 @@ public class PlayTrackPacket {
     }
 
     public static void handle(PlayTrackPacket msg, Supplier<NetworkEvent.Context> ctx) {
-        System.out.println("Packet received");
-        ctx.get().enqueueWork(() -> {
-            // Work that needs to be threadsafe (most work)
-            System.out.println("Package being handled on "+ctx.get().getDirection().getReceptionSide().toString());
-
-            ClientHandler.playTrack();
-
-            // do stuff
-        });
+        ctx.get().enqueueWork(ClientHandler::playTrack);
         ctx.get().setPacketHandled(true);
-        System.out.println("Packet handled");
     }
 
 
