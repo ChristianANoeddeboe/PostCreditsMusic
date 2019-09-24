@@ -1,6 +1,6 @@
 package angercraft.postcreditsmusic.network;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import angercraft.postcreditsmusic.client.ClientHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -17,11 +17,18 @@ public class PlayTrackPacket {
     }
 
     public static void handle(PlayTrackPacket msg, Supplier<NetworkEvent.Context> ctx) {
+        System.out.println("Packet received");
         ctx.get().enqueueWork(() -> {
             // Work that needs to be threadsafe (most work)
-            ServerPlayerEntity sender = ctx.get().getSender(); // the client that sent this packet
+            System.out.println("Package being handled on "+ctx.get().getDirection().getReceptionSide().toString());
+
+            ClientHandler.playTrack();
+
             // do stuff
         });
         ctx.get().setPacketHandled(true);
+        System.out.println("Packet handled");
     }
+
+
 }

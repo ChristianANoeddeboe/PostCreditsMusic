@@ -2,6 +2,10 @@ package angercraft.postcreditsmusic;
 
 import angercraft.postcreditsmusic.network.ModNetworkHandler;
 import net.minecraft.block.Block;
+import net.minecraft.client.audio.MusicTicker;
+import net.minecraft.client.audio.Sound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,15 +19,20 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(PostCreditsMusic.MOD_ID)
 public class PostCreditsMusic
 {
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String MOD_ID = "postcreditsmusic";
+
+    public static SoundEvent sound;
 
     public PostCreditsMusic() {
         // Register the setup method for modloading
@@ -62,6 +71,8 @@ public class PostCreditsMusic
                 collect(Collectors.toList()));
     }
 
+
+
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
     // Event bus for receiving Registry Events)
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
@@ -70,6 +81,14 @@ public class PostCreditsMusic
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
             // register a new block here
             LOGGER.info("HELLO from Register Block");
+        }
+
+        @SubscribeEvent
+        public static void registerMusic(final RegistryEvent.Register<SoundEvent> event) {
+            ResourceLocation resource = new ResourceLocation(PostCreditsMusic.MOD_ID, "track");
+            sound = new SoundEvent(resource);
+            sound.setRegistryName(MOD_ID, "track");
+            event.getRegistry().register(sound);
         }
     }
 }

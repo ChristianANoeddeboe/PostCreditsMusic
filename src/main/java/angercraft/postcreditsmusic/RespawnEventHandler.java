@@ -1,12 +1,15 @@
 package angercraft.postcreditsmusic;
 
 import angercraft.postcreditsmusic.network.ModNetworkHandler;
+import angercraft.postcreditsmusic.network.PlayTrackPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.lang.reflect.Field;
 
@@ -31,12 +34,8 @@ public class RespawnEventHandler {
                 e.printStackTrace();
             }
             if(seenCredits) {
-                ModNetworkHandler.channel.send();
+                ModNetworkHandler.channel.sendTo(new PlayTrackPacket(), player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
             }
         }
-        /*if(ClientHandler.played == false) {
-            ClientHandler.shouldPlayMusic = true;
-        }*/
-        //event.isEndConquered()
     }
 }

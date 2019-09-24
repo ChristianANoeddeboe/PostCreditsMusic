@@ -2,6 +2,7 @@ package angercraft.postcreditsmusic.network;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class ModNetworkHandler {
@@ -18,6 +19,11 @@ public class ModNetworkHandler {
 
         int discriminator = 0;
 
-        channel.registerMessage(discriminator++, PlayTrackPacket.class, PlayTrackPacket::encode, PlayTrackPacket::new, PlayTrackPacket::handle);
+        //Hvis den her er rød igen senere, så må det være intelliJ, fordi det er sådan her den skal være.
+        channel.registerMessage(discriminator++, PlayTrackPacket.class, PlayTrackPacket::encode, PlayTrackPacket::decode, PlayTrackPacket::handle);
+    }
+
+    public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
+        channel.send(target, message);
     }
 }
