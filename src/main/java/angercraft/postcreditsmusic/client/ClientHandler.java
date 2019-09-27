@@ -21,7 +21,7 @@ import java.util.Map;
 public class ClientHandler {
 
     private static boolean musicPlaying = false;
-    private static boolean creditsHasBeenShown = true; //TODO CHANGE TO FALSE
+    private static boolean creditsHasBeenShown = false;
     private static Field soundEngineField = ObfuscationReflectionHelper.findField(SoundHandler.class, "field_147694_f");
     private static Field playingSoundsStopTimeField = ObfuscationReflectionHelper.findField(SoundEngine.class, "field_148624_n");
     private static ISound sound = null;
@@ -68,13 +68,6 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public static void onGuiShown(GuiOpenEvent event) {
-        if(event.getGui() instanceof WinGameScreen) {
-            creditsHasBeenShown = true;
-        }
-    }
-
-    @SubscribeEvent
     public static void playSound(PlaySoundEvent event) {
         if(musicPlaying && event.getSound().getCategory().equals(SoundCategory.MUSIC)) {
             event.setResultSound(null);
@@ -82,5 +75,9 @@ public class ClientHandler {
         if(event.getSound().getSoundLocation().getNamespace().equals(PostCreditsMusic.sound.getName().getNamespace())) {
             sound = event.getSound();
         }
+    }
+
+    public static void setCreditsHasBeenShown(boolean creditsHasBeenShown) {
+        ClientHandler.creditsHasBeenShown = creditsHasBeenShown;
     }
 }
